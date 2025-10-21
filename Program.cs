@@ -40,9 +40,13 @@ namespace NimGames
 
             bool playingAgain = true;
             object currentPlayer = null!;
-            
+
             // string player1;
             // string player2;
+
+            GreetingRules greeting = new GreetingRules();
+            greeting.Greeting();
+            greeting.Rules();
 
             Console.WriteLine("What is the name of first player?");
             string userInput = Console.ReadLine()!;
@@ -64,12 +68,7 @@ namespace NimGames
 
                 while (sticksLeft) 
                 {
-                    if (currentPlayer == player1)
-                    {
-                        currentPlayer = player2;
-                    }
-                    else { currentPlayer = player1; }
-
+          
                     game.DisplayBoard(game.GameBoard);
 
                     if (currentPlayer == player1) { Console.WriteLine($"Time for {player1.Name} to make a move!"); }
@@ -87,10 +86,20 @@ namespace NimGames
                     {
                         Console.WriteLine("Good, now we take away those sticks");
                         game.UpdateBoard(game.GameBoard, row, amount);
+                        sticksLeft = game.SticksLeft(game.GameBoard);
+                        if (!sticksLeft) break;
+                       
+                        currentPlayer = (currentPlayer == player1) ? player2 : player1;
+
                     }
                     else 
                     {
-                        Console.WriteLine("Not enough rows or enough sticks in row");
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Ogiltigt drag! Försök igen.");
+                            Console.ResetColor();
+                            continue; 
+                        }
                     }
                    
                     sticksLeft = game.SticksLeft(game.GameBoard);
@@ -132,6 +141,7 @@ namespace NimGames
                     return "Hank"; 
                 }
             }
+
 
         }
     }
