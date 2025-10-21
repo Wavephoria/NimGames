@@ -121,7 +121,12 @@ namespace NimGames
                     player1.Losses++;
                 }
 
+                Console.WriteLine("Thank you for playing!");
+
                 Console.WriteLine($"{player1.Name} has {player1.Wins} wins!");
+                Console.WriteLine($"{player2.Name} has {player2.Wins} wins!");
+                Console.WriteLine();
+
 
                 Console.WriteLine("Do you wanna play another game?");
                 Console.ReadLine();
