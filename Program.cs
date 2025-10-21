@@ -128,8 +128,10 @@ namespace NimGames
                 Console.WriteLine();
 
 
-                Console.WriteLine("Do you wanna play another game?");
-                Console.ReadLine();
+                Console.WriteLine("Do you wanna play another game? y/n");
+                string endInput = Console.ReadLine()!;
+
+                if (endInput == "n") { playingAgain = false; }
             }
 
 

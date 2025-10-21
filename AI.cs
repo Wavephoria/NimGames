@@ -21,8 +21,9 @@ namespace NimGames
             this.Losses = 0;
         }
 
-        static void MakeMove()
+        static void MakeMove(int[][] board)
         {
+
 
             Random rand = new Random();
             int pileIndex = rand.Next(0, 3); // Assuming there are 3 piles
