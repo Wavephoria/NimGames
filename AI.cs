@@ -28,6 +28,8 @@ namespace NimGames
             int pileIndex = rand.Next(0, 3); // Assuming there are 3 piles
             int sticksToRemove = rand.Next(1, 6); // Remove between 1 and 5 sticks
 
+            Console.WriteLine($"AI chooses pile {pileIndex + 1} and removes {sticksToRemove} sticks.");
+
         }
     }
 }
