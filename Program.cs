@@ -71,6 +71,7 @@ namespace NimGames
                     else { currentPlayer = player1; }
 
                     game.DisplayBoard(game.GameBoard);
+                    Console.WriteLine();
 
                     if (currentPlayer == player1) { Console.WriteLine($"Time for {player1.Name} to make a move!"); }
                     else { Console.WriteLine($"Time for {player2.Name} to make a move!"); }
