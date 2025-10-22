@@ -7,57 +7,41 @@ namespace NimGames
     {
         static void Main(string[] args)
         {
-
-            // Playing game of NIM
-            // Rules of the game:
-            // 3 piles of 5 sticks
-            // Each round you can choose from 1 pile and between 1 and 5 sticks
-            // Last to pick a stick from a pile is the winner of the game
-
-
-            // Requirements:
-            // - Greeting and rules for game
-            // - Name for players and game is supposed to know who is the next player
-            // - After game, print out winner and thank for playing
-            // - Ask if they wanna play again
-            // - Statistics for current session
-            // - Playing field will be stored in an array
-            // - One playing round will be printed as <pile> <amount>
-            // - No crashes, check if input is correct
-            // - AI implemented
-            // - Not just black and white
-
-            // Methods:
-            // - Greeting/Rules
-            // - Name
-            // - Current player
-            // - Printing out game field
-            // - Keeping track of amount of sticks left
-            // - Making the move
-            // - Uppdating game field
-            // - End of game
-            // - AI move
-
             bool playingAgain = true;
             object currentPlayer = null!;
-
-            // string player1;
-            // string player2;
-
+            bool vsHuman = false;
+            bool vsAI = false;
+            IPlayer player2 = null!;
             GreetingRules greeting = new GreetingRules();
+
+
             greeting.Greeting();
             greeting.Rules();
 
+
             Console.WriteLine("What is the name of first player?");
             string userInput = Console.ReadLine()!;
-            string input = ErrorCheck(userInput);
+            string input = greeting.PlayerNames(userInput);
             Player player1 = new Player(input);
 
-            Console.WriteLine("What is the name of the second player?");
-            userInput = Console.ReadLine()!;
-            input = ErrorCheck(userInput);
-            Player player2 = new Player(input);
 
+            Console.WriteLine("Do you wanna play against another human? y/n (Wrong input gives you AI opponent)");
+            string humanInput = Console.ReadLine()!;
+
+
+            if (humanInput == "y")
+            {
+                vsHuman = true;
+                Console.WriteLine("What is the name of the second player?");
+                userInput = Console.ReadLine()!;
+                input = greeting.PlayerNames(userInput);
+                player2 = new Player(input);
+            }
+            else 
+            {
+                vsAI = true;
+                player2 = new AI("Computer");
+            }
 
 
             while (playingAgain) 
@@ -68,23 +52,38 @@ namespace NimGames
 
                 while (sticksLeft) 
                 {
-          
+                
                     game.DisplayBoard(game.GameBoard);
                     Console.WriteLine();
 
                     if (currentPlayer == player1) { Console.WriteLine($"Time for {player1.Name} to make a move!"); }
                     else { Console.WriteLine($"Time for {player2.Name} to make a move!"); }
 
-                    // Make errorcheck on wrong inputs
-                    Console.WriteLine("Which row do you choose?");
-                    int row = int.Parse(Console.ReadLine()!);
+                    string userMove = "";
+                    if (vsHuman || vsAI && currentPlayer == player1)
+                    {
+                        // Make errorcheck on wrong inputs
+                        Console.WriteLine("Which row do you choose and how many sticks?");
+                        userMove = Console.ReadLine()!;
 
-                    // Make errorcheck on wrong inputs
-                    Console.WriteLine("How many sticks do you want to take?");
-                    int amount = int.Parse(Console.ReadLine()!);
+                    }
+                    else 
+                    { 
+                        Console.WriteLine("The computer is making a move...");
+                        userMove = AI.MakeMoveComputer(game.GameBoard);
+                    }
+
+                    string[] inputs = userMove.Split(' ');
+
+                    int row = int.Parse(inputs[0]);
+                    int amount = int.Parse(inputs[1]);  
+                    // Make it one string and split it into two ints
+                    // int row = int.Parse(Console.ReadLine()!);
+                    // int amount = int.Parse(Console.ReadLine()!);
 
                     if (game.ErrorChecks(game.GameBoard, row, amount))
                     {
+
                         Console.WriteLine("Good, now we take away those sticks");
                         game.UpdateBoard(game.GameBoard, row, amount);
                         sticksLeft = game.SticksLeft(game.GameBoard);
@@ -97,7 +96,7 @@ namespace NimGames
                     {
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Ogiltigt drag! Försök igen.");
+                            Console.WriteLine("Illegal move! Try again.");
                             Console.ResetColor();
                             continue; 
                         }
@@ -107,22 +106,8 @@ namespace NimGames
 
                 }
 
-                if (currentPlayer == player1)
-                {
-                    Console.WriteLine($"Congratulations on the win {player1.Name}!");
-                    player1.Wins++;
-                    player2.Losses++;
-                }
-
-                else 
-                {
-                    Console.WriteLine($"Congratulations on the win {player2.Name}!");
-                    player2.Wins++;
-                    player1.Losses++;
-                }
-
                 Console.WriteLine("Thank you for playing!");
-
+                Console.WriteLine("----------------------");
                 Console.WriteLine($"{player1.Name} has {player1.Wins} wins!");
                 Console.WriteLine($"{player2.Name} has {player2.Wins} wins!");
                 Console.WriteLine();
@@ -137,18 +122,7 @@ namespace NimGames
 
 
 
-            static string ErrorCheck(string message) 
-            {
-                if (message != null && message != "")
-                {
-                    return message;
-                }
 
-                else 
-                { 
-                    return "Hank"; 
-                }
-            }
 
 
         }
