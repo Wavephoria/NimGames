@@ -21,9 +21,12 @@ namespace NimGames
 
         }
 
-        public void NumberOfPlayers() 
-        { 
-            
+        public string PlayerNames(string userInput) 
+        {
+
+            string input = ErrorCheck(userInput);
+            return input;
+
         }
         public void Rules() 
         {
@@ -40,6 +43,20 @@ namespace NimGames
 
             Console.ReadLine();
 
+        }
+
+
+        static string ErrorCheck(string message)
+        {
+            if (message != null && message != "")
+            {
+                return message;
+            }
+
+            else
+            {
+                return "Hank";
+            }
         }
     }
 }
