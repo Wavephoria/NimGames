@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace NimGames
 {
@@ -64,19 +65,92 @@ namespace NimGames
                     {
                         // Make errorcheck on wrong inputs
                         Console.WriteLine("Which row do you choose and how many sticks?");
-                        userMove = Console.ReadLine()!;
 
+                        userMove = Console.ReadLine()!;
+                        if (userMove.ToLower() == "aye macarena")
+                        {
+                            Console.ResetColor();
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("H");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("E");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("Y");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("Y");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.Write("Y");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Y");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("Y");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("!");
+                            Thread.Sleep(150);
+
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("!");
+                            Thread.Sleep(150);
+
+
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.WriteLine("!");
+                            Thread.Sleep(150);
+
+                            Console.ResetColor();
+                            continue;
+                        }
                     }
+
                     else 
                     { 
                         Console.WriteLine("The computer is making a move...");
                         userMove = AI.MakeMoveComputer(game.GameBoard);
                     }
 
-                    string[] inputs = userMove.Split(' ');
 
-                    int row = int.Parse(inputs[0]);
-                    int amount = int.Parse(inputs[1]);  
+                    int row = 0;
+                    int amount = 0;
+
+                    try
+                    {
+                        
+
+
+                        string[] inputs = userMove.Split(' ');
+
+                        row = int.Parse(inputs[0]);
+                        amount = int.Parse(inputs[1]);
+                    }
+                    catch
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[ERROR] You have to write numbers! [ERROR] No space before entering numbers!");
+                        Console.ResetColor();
+                        continue; 
+                    }
+                
+                    
+
+                    
+                  
+
+                    
                     // Make it one string and split it into two ints
                     // int row = int.Parse(Console.ReadLine()!);
                     // int amount = int.Parse(Console.ReadLine()!);
