@@ -19,36 +19,7 @@ namespace NimGames
             this.Losses = 0;
         }
 
-        public static void PlayerMove(string userInput)
-        {
-            // To be implemented
-        }
-
-        public static void NextPlayer(string currentPlayer)
-        {
-            // To be implemented
-        }
-
-        public static void UpdateScore(string currentPlayer, Player player)
-        {
-            if (currentPlayer == player.Name)
-            {
-                Console.WriteLine($"Congratulations on the win {player.Name}!");
-                player.Wins++;
-            }
-            else 
-            { 
-                player.Losses++;
-            }
-        }
-
-
-
-
-        public static void EndGame()
-        {
-
-        }
-
+        // Overriding ToString to show the current name of player to display when ending the game
+        public override string ToString() { return Name; }
     }
 }
